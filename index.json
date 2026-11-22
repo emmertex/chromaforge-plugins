@@ -1,6 +1,6 @@
 {
  "format": 1,
- "generated": "2026-11-22T13:56:44Z",
+ "generated": "2026-11-22T14:17:32Z",
  "source": "https://github.com/emmertex/chromaforge-plugins",
  "plugins": [
   {
@@ -66,8 +66,7 @@
     "macos",
     "windows",
     "linux",
-    "android",
-    "web"
+    "android"
    ],
    "url": "https://github.com/AudiFormer/ChromaGate-Plugin/releases/download/v0.4.0/chromagate-v0.4.0.wasm",
    "sha256": "3b44e599409780b71ca9393a38fb27ab61b834a54985904c974e3b97e8f427b8",
@@ -113,8 +112,7 @@
     "macos",
     "windows",
     "linux",
-    "android",
-    "web"
+    "android"
    ],
    "url": "https://github.com/AudiFormer/chromakode-film/releases/download/v0.1.1/chromagold.wasm",
    "sha256": "1aac33f992e9d3089243bfdef2b5085a6133283f1b72d413d758decebb3bc350",
@@ -152,8 +150,7 @@
     "macos",
     "windows",
     "linux",
-    "android",
-    "web"
+    "android"
    ],
    "url": "https://github.com/AudiFormer/chromakode-film/releases/download/v0.1.1/chromakode.wasm",
    "sha256": "e0d1097de5dc35b7d2e116cfcf5be36c7a1ae1fac3f25df9145d1f8d06c785e8",
@@ -191,8 +188,7 @@
     "macos",
     "windows",
     "linux",
-    "android",
-    "web"
+    "android"
    ],
    "url": "https://github.com/AudiFormer/ChromaLab-Plugin/releases/download/v0.12.1/chromalab-v0.12.1.wasm",
    "sha256": "e4e39119c60e229f71cef9a262da44db80279eaf84473a5daccaefe6f2f10794",
@@ -230,8 +226,7 @@
     "macos",
     "windows",
     "linux",
-    "android",
-    "web"
+    "android"
    ],
    "url": "https://github.com/AudiFormer/chromakode-film/releases/download/v0.1.1/chromalome.wasm",
    "sha256": "b1c738cb64a39f583fec0d5e07dd95173b00aae9749e3670dd40e0ee6a31ef85",
@@ -269,8 +264,7 @@
     "macos",
     "windows",
     "linux",
-    "android",
-    "web"
+    "android"
    ],
    "url": "https://github.com/AudiFormer/chromakode-film/releases/download/v0.1.1/chromastill.wasm",
    "sha256": "3a685d9df41549963335744a22f5ba334a04379afa49898b8d4461fb91e4a847",
