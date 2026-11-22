@@ -28,7 +28,7 @@ the build last ran.
 | `tier` | `vetted` or `community` |
 | `summary`, `description` | plain text; the list shows `summary` |
 | `tags` | search words from the record |
-| `platforms` | where it can be installed: any of `macos`, `windows`, `linux`, `android`, `web` |
+| `platforms` | where it can be installed: any of `macos`, `windows`, `linux`, `android` (`web` is reserved: the web build runs no plug-ins yet) |
 | `url` | the `.wasm` to download: `https://`, a GitHub release file |
 | `sha256`, `size` | of that file; the app installs nothing whose SHA-256 differs |
 | `requires` | host features the module needs, as its manifest names them |

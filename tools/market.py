@@ -31,6 +31,9 @@ FORMAT = 1
 ROOT = Path(__file__).resolve().parent.parent
 TIERS = ("vetted", "community")
 PLATFORMS = ("macos", "windows", "linux", "android", "web")
+# where the app runs plug-ins today: the web build has none, so nothing is listed for it unless
+# a record says so
+NATIVE = PLATFORMS[:4]
 GROUPS = ("catalog", "metadataWrite", "libraryAdd", "pixels", "crop", "virtualCopy", "network", "fs", "programs")
 FLAG_GROUPS = GROUPS[:6]
 PROGRAM_PLATFORMS = (("macBundleIds", "macos"), ("windowsExe", "windows"), ("linuxExe", "linux"))
@@ -340,11 +343,11 @@ def permissions(m: Module) -> dict:
 
 
 def platforms(m: Module) -> list[str]:
-    """Where the module is of use: everywhere, unless all it does goes through programs it
-    starts, which exist on the systems its entries name (and never on Android or the web)."""
+    """Where the module is of use: everywhere the app runs plug-ins, unless all it does goes
+    through programs it starts, which exist on the systems its entries name (never on Android)."""
     programs = permissions(m)["programs"]
     if not programs:
-        return list(PLATFORMS)
+        return list(NATIVE)
     named = {platform for p in programs for key, platform in PROGRAM_PLATFORMS if p.get(key)}
     return [p for p in PLATFORMS if p in named]
 

@@ -32,11 +32,13 @@ per thing, each with its own patterns.
 
 Left out, `platforms` is worked out from the module:
 
-- a pixel filter, or a plug-in that starts no programs: every platform (`macos`, `windows`,
-  `linux`, `android`, `web`);
+- a pixel filter, or a plug-in that starts no programs: every platform the app runs plug-ins on
+  (`macos`, `windows`, `linux`, `android`);
 - a plug-in that starts programs: the systems its program entries name (`macBundleIds` → macOS,
-  `windowsExe` → Windows, `linuxExe` → Linux), never Android or the web, where the app starts no
-  programs.
+  `windowsExe` → Windows, `linuxExe` → Linux), never Android, where the app starts no programs.
+
+`web` is a platform a record may name, for the day the web build runs plug-ins; it has none today,
+so nothing is listed for it by default.
 
 Set it only when that is wrong, for example a plug-in that depends on a service available in one
 place. The app shows every platform as supported or not, and won't install an entry on a platform

@@ -122,7 +122,7 @@ class Inspect(unittest.TestCase):
         self.assertEqual((m.kind, m.manifest["id"], m.stamped, m.signer), ("plugin", "org.example.tools", False, None))
         self.assertEqual(market.permissions(m)["groups"], ["catalog"])
         f = market.inspect(filter_module(FILTER))
-        self.assertEqual((f.kind, market.permissions(f)["groups"], market.platforms(f)), ("filter", [], list(market.PLATFORMS)))
+        self.assertEqual((f.kind, market.permissions(f)["groups"], market.platforms(f)), ("filter", [], ["macos", "windows", "linux", "android"]))
 
     def test_a_stamp_must_be_what_the_module_answers(self):
         self.assertTrue(market.inspect(plugin(PLUGIN, stamp=True)).stamped)
