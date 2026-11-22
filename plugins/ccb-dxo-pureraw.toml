@@ -1,0 +1,7 @@
+# ccb: Edit in DxO PureRAW. One of several plug-ins this repository may release: its tags are ccb-dxo-pureraw-v*.
+repo = "clydecbrown/chromaforge-plugins"
+maintainers = ["clydecbrown"]
+tier = "community"
+tag = "ccb-dxo-pureraw-v*"
+assets = "ccb-dxo-pureraw-*.wasm"
+tags = ["raw", "denoise", "external-editor"]

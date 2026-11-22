@@ -1,0 +1,5 @@
+# ChromaKode Film: film-stock looks as pixel filters (one module per stock).
+repo = "AudiFormer/chromakode-film"
+maintainers = ["AudiFormer"]
+tier = "community"
+tags = ["film", "look", "colour"]

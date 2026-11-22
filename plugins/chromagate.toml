@@ -1,0 +1,5 @@
+# ChromaGate: finds the film gate in a scan and sets the crop.
+repo = "AudiFormer/ChromaGate-Plugin"
+maintainers = ["AudiFormer"]
+tier = "community"
+tags = ["film", "scanning", "crop"]

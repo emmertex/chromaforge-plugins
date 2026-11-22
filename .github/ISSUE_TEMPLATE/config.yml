@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: A problem with one plug-in
+    url: https://github.com/emmertex/chromaforge-plugins/tree/index
+    about: Bugs in a plug-in go to its own repository, linked from the index and from the plug-in's page in the app.
+  - name: A problem with the app's marketplace window
+    url: https://github.com/emmertex/chromaforge/issues
+    about: Installing, updating and searching are part of Chromaforge itself.

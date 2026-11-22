@@ -1,0 +1,17 @@
+name: Suggest a plug-in
+description: Suggest a plug-in you didn't write. Authors list their own with a pull request (CONTRIBUTING.md).
+labels: [suggestion]
+body:
+  - type: input
+    id: repo
+    attributes:
+      label: Repository
+      description: https://github.com/owner/name
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: What it does
+    validations:
+      required: true

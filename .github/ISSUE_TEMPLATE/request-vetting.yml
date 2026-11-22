@@ -1,0 +1,36 @@
+name: Request vetting
+description: Ask a maintainer to review a listed plug-in for the vetted tier.
+labels: [vetting]
+body:
+  - type: input
+    id: record
+    attributes:
+      label: Record
+      description: plugins/<slug>.toml
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version and tag to review
+    validations:
+      required: true
+  - type: textarea
+    id: permissions
+    attributes:
+      label: What it asks for, and why
+      description: Each permission, host, folder and program, with the reason it is needed.
+    validations:
+      required: true
+  - type: textarea
+    id: build
+    attributes:
+      label: How the released file is built
+      description: The command or workflow that produces the .wasm from the tagged source.
+    validations:
+      required: true
+  - type: input
+    id: fingerprint
+    attributes:
+      label: Signing key fingerprint
+      description: If the module is signed.

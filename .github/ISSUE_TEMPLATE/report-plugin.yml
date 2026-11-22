@@ -1,0 +1,22 @@
+name: Report a plug-in
+description: A listed plug-in breaks the rules, misleads, or should be removed. For anything that endangers users, report privately (Security ▸ Report a vulnerability).
+labels: [report]
+body:
+  - type: input
+    id: plugin
+    attributes:
+      label: Plug-in id
+      description: As shown on its marketplace entry, e.g. io.github.someone.thing
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+  - type: textarea
+    id: what
+    attributes:
+      label: What it does that it shouldn't
+      description: What you saw, and how a maintainer can see it too.
+    validations:
+      required: true

@@ -1,0 +1,110 @@
+# Reviews a pull request that only adds or changes records, comments what it found, and merges it
+# with no maintainer looking when the automatic-listing rules hold (CONTRIBUTING.md):
+#   - only plugins/<slug>.toml files are added or changed, all of tier "community";
+#   - every record checks out (tools/market.py check);
+#   - the author is named in the record's `maintainers`, and owns the plug-in's repository or
+#     published the release; for a record that exists, the author is one of its maintainers on main.
+#
+# pull_request_target runs with a write token, so this workflow never checks out or runs anything
+# from the pull request: the tools come from main, and the records are fetched as data.
+name: Listing
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+    paths: ["plugins/**"]
+
+permissions:
+  contents: write
+  pull-requests: write
+  actions: write
+
+concurrency:
+  group: listing-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  listing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      GH_TOKEN: ${{ github.token }}
+      PR: ${{ github.event.pull_request.number }}
+      AUTHOR: ${{ github.event.pull_request.user.login }}
+      HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+      HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
+      AUTO_MERGE: ${{ vars.AUTO_MERGE_COMMUNITY }}
+    steps:
+      - uses: actions/checkout@v4 # main: the trusted tools and records
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: tools/requirements.txt
+      - run: pip install -r tools/requirements.txt
+      - name: The pull request's records, as data
+        id: records
+        run: |
+          set -euo pipefail
+          gh api "repos/${GITHUB_REPOSITORY}/pulls/${PR}/files" --paginate --jq '.[] | [.status, .filename] | @tsv' > files.tsv
+          cp -r plugins _pr
+          only=""
+          records_only=true
+          while IFS=$'\t' read -r status file; do
+            if [[ ! "$file" =~ ^plugins/[a-z0-9][a-z0-9-]{0,62}\.toml$ ]] || [[ "$status" != "added" && "$status" != "modified" ]]; then
+              records_only=false
+              continue
+            fi
+            slug=$(basename "$file" .toml)
+            gh api "repos/${HEAD_REPO}/contents/${file}?ref=${HEAD_SHA}" -H "Accept: application/vnd.github.raw" > "_pr/${slug}.toml"
+            if [ "$(stat -c %s "_pr/${slug}.toml")" -gt 16384 ]; then
+              echo "plugins/${slug}.toml is over 16 KiB" >&2
+              exit 1
+            fi
+            only="$only $slug"
+          done < files.tsv
+          echo "only=$only" >> "$GITHUB_OUTPUT"
+          echo "records_only=$records_only" >> "$GITHUB_OUTPUT"
+      - name: Check
+        id: check
+        if: steps.records.outputs.only != ''
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          ONLY: ${{ steps.records.outputs.only }}
+        run: |
+          mkdir -p _prev
+          curl -fsSL "https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/index/index.json" -o _prev/index.json || rm -f _prev/index.json
+          echo fail > verdict.txt
+          # shellcheck disable=SC2086
+          python tools/market.py check --records _pr --base plugins --only $ONLY --author "$AUTHOR" \
+            --previous _prev/index.json --report report.md --verdict verdict.txt || true
+          echo "verdict=$(cat verdict.txt)" >> "$GITHUB_OUTPUT"
+      - name: Comment
+        if: steps.records.outputs.only != ''
+        env:
+          RECORDS_ONLY: ${{ steps.records.outputs.records_only }}
+        run: |
+          marker="<!-- marketplace-listing -->"
+          { echo "$marker"; cat report.md; } > body.md
+          if [ "$RECORDS_ONLY" != "true" ]; then
+            printf '\nThis pull request changes more than records, so a maintainer reviews it.\n' >> body.md
+          fi
+          id=$(gh api "repos/${GITHUB_REPOSITORY}/issues/${PR}/comments" --paginate \
+            --jq "[.[] | select(.body | startswith(\"$marker\"))][0].id // empty")
+          if [ -n "$id" ]; then
+            gh api -X PATCH "repos/${GITHUB_REPOSITORY}/issues/comments/${id}" -F body=@body.md > /dev/null
+          else
+            gh pr comment "$PR" --repo "$GITHUB_REPOSITORY" --body-file body.md
+          fi
+      - name: List it
+        if: >-
+          steps.check.outputs.verdict == 'auto' && steps.records.outputs.records_only == 'true'
+          && env.AUTO_MERGE != 'false'
+        run: |
+          # the commit checked is the commit merged
+          gh pr merge "$PR" --repo "$GITHUB_REPOSITORY" --squash --match-head-commit "$HEAD_SHA"
+          # a merge by this token starts no workflow of its own
+          gh workflow run index.yml --repo "$GITHUB_REPOSITORY" --ref main
+      - name: Fail when a record can't be listed
+        if: steps.check.outputs.verdict == 'fail'
+        run: exit 1

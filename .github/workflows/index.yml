@@ -1,0 +1,85 @@
+# Rebuilds the index the app reads and publishes it on the `index` branch: every hour (so a
+# plug-in's new release is listed without anyone touching this repository), on every change to
+# main, and on request. A record that can't be read keeps its entries and is reported in one issue.
+name: Index
+
+on:
+  schedule:
+    - cron: "17 * * * *"
+  push:
+    branches: [main]
+    paths: ["plugins/**", "tools/**", ".github/workflows/index.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: index
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: tools/requirements.txt
+      - run: pip install -r tools/requirements.txt
+      - name: Downloaded modules, kept between runs
+        uses: actions/cache@v4
+        with:
+          path: .cache
+          key: modules-${{ github.run_id }}
+          restore-keys: modules-
+      - name: The index branch as it is
+        run: |
+          if git fetch --depth 1 origin index 2>/dev/null; then
+            git worktree add --detach _index FETCH_HEAD
+            git -C _index checkout -B index
+          else
+            git worktree add --orphan -b index _index
+          fi
+      - name: Build
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          python tools/market.py build --out _site --previous _index/index.json --cache .cache \
+            --report report.md --problems problems.json
+          cat report.md >> "$GITHUB_STEP_SUMMARY"
+          # drop cached modules no release names any more
+          find .cache -type f -mtime +30 -delete 2>/dev/null || true
+      - name: Publish
+        run: |
+          cp _site/index.json _site/README.md _index/
+          cd _index
+          git add -A
+          if git diff --cached --quiet; then
+            echo "The index is unchanged."
+            exit 0
+          fi
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+            commit -q -m "Index: $(python3 -c "import json; d=json.load(open('index.json')); print(len(d['plugins']), 'entries,', d['generated'])")"
+          git push origin index
+      - name: Report records that need someone
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          title="Index: records that need attention"
+          number=$(gh issue list --state open --search "in:title \"$title\"" --json number,title \
+            --jq "[.[] | select(.title == \"$title\")][0].number // empty")
+          if python3 -c "import json,sys; p=json.load(open('problems.json')); sys.exit(0 if p['errors'] or p['held'] else 1)"; then
+            { cat report.md; echo; echo "_Updated by the Index workflow on every run; it closes itself when nothing is left._"; } > body.md
+            if [ -n "$number" ]; then
+              gh issue edit "$number" --body-file body.md
+            else
+              gh issue create --title "$title" --body-file body.md
+            fi
+          elif [ -n "$number" ]; then
+            gh issue close "$number" --comment "Every record builds again."
+          fi

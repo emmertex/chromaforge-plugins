@@ -1,0 +1,7 @@
+# ChromaLab: converts film negatives and slides.
+# The repository also keeps sample scans as releases (tags without a version): only v* tags hold the module.
+repo = "AudiFormer/ChromaLab-Plugin"
+maintainers = ["AudiFormer"]
+tier = "community"
+tag = "v*"
+tags = ["film", "scanning", "negative"]

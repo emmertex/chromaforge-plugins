@@ -1,0 +1,2 @@
+wasmtime>=24
+cryptography>=42

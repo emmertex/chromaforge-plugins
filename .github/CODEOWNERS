@@ -1,0 +1,7 @@
+# Tools, workflows and rules change only with a maintainer's review. Records are not listed here
+# on purpose: the Listing workflow decides who may change one (CONTRIBUTING.md).
+/tools/     @emmertex
+/tests/     @emmertex
+/.github/   @emmertex
+/docs/      @emmertex
+/*.md       @emmertex
