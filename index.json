@@ -1,12 +1,12 @@
 {
  "format": 1,
- "generated": "2026-11-22T14:17:32Z",
+ "generated": "2026-11-25T03:02:57Z",
  "source": "https://github.com/emmertex/chromaforge-plugins",
  "plugins": [
   {
    "id": "io.github.clydecbrown.dxo-pureraw",
    "name": "ccb: Edit in DxO PureRAW",
-   "version": "0.2.0",
+   "version": "0.2.1",
    "kind": "plugin",
    "tier": "community",
    "summary": "Sends raw photos to DxO PureRAW and adds the DNGs it makes to the album you sent them from",
@@ -20,9 +20,9 @@
    "platforms": [
     "macos"
    ],
-   "url": "https://github.com/clydecbrown/chromaforge-plugins/releases/download/ccb-dxo-pureraw-v0.2.0/ccb-dxo-pureraw-0.2.0.wasm",
-   "sha256": "f6aea0fcd0da7f35832269ba75c88f175fa0e7c592596f511adf549e5d329546",
-   "size": 231700,
+   "url": "https://github.com/clydecbrown/chromaforge-plugins/releases/download/ccb-dxo-pureraw-v0.2.1/ccb-dxo-pureraw-0.2.1.wasm",
+   "sha256": "520a03667fee138cef7ca57d9bd34c121a8751a87b8895202a7822a3d267ec1b",
+   "size": 236118,
    "requires": [
     "programs",
     "libraryAdd",
@@ -43,9 +43,9 @@
    "license": "MIT",
    "homepage": "https://github.com/clydecbrown/chromaforge-plugins",
    "repository": "https://github.com/clydecbrown/chromaforge-plugins",
-   "changelog": "https://github.com/clydecbrown/chromaforge-plugins/releases/tag/ccb-dxo-pureraw-v0.2.0",
-   "released": "2026-11-19T21:46:41Z",
-   "tag": "ccb-dxo-pureraw-v0.2.0",
+   "changelog": "https://github.com/clydecbrown/chromaforge-plugins/releases/tag/ccb-dxo-pureraw-v0.2.1",
+   "released": "2026-11-25T00:47:28Z",
+   "tag": "ccb-dxo-pureraw-v0.2.1",
    "record": "ccb-dxo-pureraw"
   },
   {
