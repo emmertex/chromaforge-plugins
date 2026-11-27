@@ -1,6 +1,6 @@
 {
  "format": 1,
- "generated": "2026-11-25T03:02:57Z",
+ "generated": "2026-11-27T13:41:40Z",
  "source": "https://github.com/emmertex/chromaforge-plugins",
  "plugins": [
   {
@@ -283,6 +283,58 @@
    "released": "2026-11-13T03:15:52Z",
    "tag": "v0.1.1",
    "record": "chromakode-film"
+  },
+  {
+   "id": "io.github.emmertex.racing-tagger",
+   "name": "Racing Tagger",
+   "version": "1.0.0",
+   "kind": "plugin",
+   "tier": "community",
+   "summary": "Tags racing photos with a local Ollama vision model: make, model, colour, class, racing numbers, people",
+   "description": "Tags racing photos with a local Ollama vision model: make, model, colour, class, racing numbers, people. Writes hierarchical keywords (AI Keywords|Make|Porsche, …) into the catalog. Port of blwfish's LrC-classification.",
+   "author": "emmertex (port); blwfish (original Racing Tagger)",
+   "tags": [
+    "ai",
+    "keywords",
+    "metadata",
+    "ollama",
+    "racing"
+   ],
+   "platforms": [
+    "macos",
+    "windows",
+    "linux",
+    "android"
+   ],
+   "url": "https://github.com/emmertex/chromaforge-racing-tagger/releases/download/v1.0.0/chromaforge_racing_tagger.wasm",
+   "sha256": "ddf2300275be028b9f013c663f3300be658a7c6247c80783253e509be4efc76f",
+   "size": 307639,
+   "requires": [
+    "settings",
+    "jobs",
+    "pixels"
+   ],
+   "permissions": [
+    "catalog",
+    "metadataWrite",
+    "pixels",
+    "network"
+   ],
+   "network": [
+    "127.0.0.1",
+    "localhost"
+   ],
+   "fs": [],
+   "programs": [],
+   "stamped": true,
+   "signer": null,
+   "license": "MIT",
+   "homepage": "https://github.com/blwfish/LrC-classification",
+   "repository": "https://github.com/emmertex/chromaforge-racing-tagger",
+   "changelog": "https://github.com/emmertex/chromaforge-racing-tagger/releases/tag/v1.0.0",
+   "released": "2026-11-27T13:40:20Z",
+   "tag": "v1.0.0",
+   "record": "racing-tagger"
   }
  ]
 }

@@ -1,7 +1,7 @@
 # Plug-in index
 
 Generated from the records on `main` by `tools/market.py`; never edited by hand.
-`index.json` is what the app reads. Last change: 2026-11-25T03:02:57Z.
+`index.json` is what the app reads. Last change: 2026-11-27T13:41:40Z.
 
 | Plug-in | Version | Kind | Tier | Platforms | Permissions | Author |
 |---|---|---|---|---|---|---|
@@ -12,3 +12,4 @@ Generated from the records on `main` by `tools/market.py`; never edited by hand.
 | [ChromaLab](https://github.com/AudiFormer/ChromaLab-Plugin) | 0.12.1 | pixel filter | community | macos, windows, linux, android | none | nwh212 |
 | [ChromaLome Purple](https://github.com/nwh212/chromakode-film) | 0.1.1 | pixel filter | community | macos, windows, linux, android | none | nwh212 |
 | [ChromaStill 800T](https://github.com/nwh212/chromakode-film) | 0.1.1 | pixel filter | community | macos, windows, linux, android | none | nwh212 |
+| [Racing Tagger](https://github.com/emmertex/chromaforge-racing-tagger) | 1.0.0 | plug-in | community | macos, windows, linux, android | catalog, metadataWrite, pixels, network | emmertex (port); blwfish (original Racing Tagger) |
