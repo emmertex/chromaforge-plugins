@@ -1,0 +1,7 @@
+# Racing Tagger: tags racing photos (make, model, colour, class, numbers) with a local
+# Ollama vision model, writing hierarchical keywords into the catalog.
+# A port of blwfish's LrC-classification (https://github.com/blwfish/LrC-classification).
+repo = "emmertex/chromaforge-racing-tagger"
+maintainers = ["emmertex"]
+tier = "community"
+tags = ["ai", "keywords", "metadata", "ollama", "racing"]
